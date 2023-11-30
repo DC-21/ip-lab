@@ -6,22 +6,17 @@ import java.net.Socket;
 
 public class SIMPLEHTTPCLIENT {
     public static void main(String[] args) {
-        try {
-            Socket socket = new Socket("www.google.com", 80);
-            OutputStream outputStream = socket.getOutputStream();
+        try (Socket socket = new Socket("www.google.com", 80);
+             OutputStream outputStream = socket.getOutputStream();
+             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
             // Send a simple HTTP GET request
             String httpRequest = "GET / HTTP/1.1\r\nHost: www.google.com\r\n\r\n";
             outputStream.write(httpRequest.getBytes());
 
             // Read and print the response
-            BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);
-            }
+            reader.lines().forEach(System.out::println);
 
-            socket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
