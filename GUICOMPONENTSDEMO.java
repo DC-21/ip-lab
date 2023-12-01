@@ -58,7 +58,7 @@ public class GUICOMPONENTSDEMO extends Frame {
             }
         });
 
-        // Scrollbar listener
+        // Scrollbar listener for code
         scrollbar.addAdjustmentListener(new AdjustmentListener() {
             public void adjustmentValueChanged(AdjustmentEvent e) {
                 System.out.println("Scrollbar Value: " + scrollbar.getValue());
